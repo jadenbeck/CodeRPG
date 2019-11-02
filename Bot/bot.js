@@ -39,12 +39,7 @@ class DBUserDatabase
     addPlayer(DBUsername)
     {
         this.players[this.players.length] = new DBUser(DBUsername, 1);;
-		var fs = require('fs')
-		var logger = fs.createWriteStream('user_data.txt', {
-			flags: 'a' // 'a' means appending (old data will be preserved)
-		})
-
-		logger.write(DBUsername + ': 1 false')
+		updateFile();
     }
     levelUp(userID)
     {
@@ -60,6 +55,7 @@ class DBUserDatabase
                 message: userID + ' has leveled up!'
             });
         }
+		updateFile();
     }
     printAll(channelID)
     {

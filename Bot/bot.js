@@ -39,7 +39,7 @@ class DBUserDatabase
     addPlayer(DBUsername)
     {
         this.players[this.players.length] = new DBUser(DBUsername, 1);;
-		updateFile();
+		this.updateFile();
     }
     levelUp(userID)
     {
@@ -55,7 +55,7 @@ class DBUserDatabase
                 message: userID + ' has leveled up!'
             });
         }
-		updateFile();
+		this.updateFile();
     }
     printAll(channelID)
     {

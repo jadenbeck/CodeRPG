@@ -24,9 +24,27 @@ class DBUserDatabase
         this.players = new Array();
         this.length = this.players.length;
     }
+	updateFile()
+	{
+		const fs = require('fs');
+        for (var i = 0; i < this.players.length; i++) 
+        {
+			fs.writeFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + '\n', (err) => {
+			// throws an error, you could also catch it here
+			if (err) throw err;
+			});
+            
+        }
+    }
     addPlayer(DBUsername)
     {
         this.players[this.players.length] = new DBUser(DBUsername, 1);;
+		var fs = require('fs')
+		var logger = fs.createWriteStream('user_data.txt', {
+			flags: 'a' // 'a' means appending (old data will be preserved)
+		})
+
+		logger.write(DBUsername + ': 1 false')
     }
     levelUp(userID)
     {
@@ -159,7 +177,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					default:
 						bot.sendMessage({
 							to: channelID,
-							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\n Tutorial 2 is if/else statements \nTutorial 3 is loops \n Tutorial 4 is functions'
+							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\nTutorial 2 is if/else statements \nTutorial 3 is loops \nTutorial 4 is functions'
 						});
 					break;
 				}

@@ -161,7 +161,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					case '1':
 						bot.sendMessage({
 							to: channelID,
-							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\n or: ```python\nprint(\'Your\', \'Messahe\')\n```\n Variable Assignment: ```python\nvar_name = value\n```'
+							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\n or: ```python\nprint(\'Your\', \'Message\')\n```\n Variable Assignment: ```python\nvar_name = value\n```'
 						});
 					break;
 					//Tutorial 2

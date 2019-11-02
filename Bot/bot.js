@@ -24,14 +24,25 @@ class DBUserDatabase
         this.players = new Array();
         this.length = this.players.length;
     }
+	readFromFile(){
+		var fs = require('fs');
+		var lines = fs.readFileSync('user_data.txt').toString().split("\n");
+		for (var i = 0; i < lines.length; i++){
+			var splitted = lines[i].split(" --> Level: ");
+			if (spitted[0] != ''){
+				this.players[this.players.length] = new DBUser(splitted[0],splitted[1]);
+			}
+		}
+	}
 	updateFile()
 	{
 		const fs = require('fs');
+		fs.open('user_data.txt', 'w', function (err, file) {
+			if (err) throw err;
+			});
         for (var i = 0; i < this.players.length; i++) 
         {
-			fs.writeFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + '\n', (err) => {
-			// throws an error, you could also catch it here
-			if (err) throw err;
+			fs.appendFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + '\n', function (err) {
 			});
             
         }
@@ -50,11 +61,8 @@ class DBUserDatabase
                 this.players[i].incrementLevel();
                 break;
             }
-            bot.sendMessage({
-                to: channelID,
-                message: userID + ' has leveled up!'
-            });
         }
+		
 		this.updateFile();
     }
     printAll(channelID)
@@ -97,6 +105,10 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
+	var fs = require('fs');
+	if (fs.readFileSync('user_data.txt').toString() != ''){
+		playerDatabase.readFromFile();
+	}
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
@@ -131,6 +143,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'levelup':
             {
                 playerDatabase.levelUp(userID);
+				bot.sendMessage({
+					to: channelID,
+					message: userID + ' has leveled up!'
+				});
             }
             break;
             case 'everyone':

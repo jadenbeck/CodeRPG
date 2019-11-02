@@ -161,25 +161,31 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					case '1':
 						bot.sendMessage({
 							to: channelID,
-							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\n or: ```python\nprint(\'Your\', \'Message\')\n```\n Variable Assignment: ```python\nvar_name = value\n```'
+							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\noutput: Your Message\nor: ```python\nprint(\'Your\', \'Message\')\n```\noutput: Your Message Variable Assignment: ```python\nvar_name = value\nprint(var_name)\n``` output: value'
+						});
+					break;
+					case '2':
+						bot.sendMessage({
+							to: channelID,
+							message: 'Variable Types:\nboolean: True or False\ninteger: a whole number\nfloat: a decimal\nstring: any word or words\n\nOperators:\n+: adds two values\n-: subtracts two values\n*: multiplies two values\n/: divides two values\n==: returns if two things on either side are equal\n!=: returns if two things are not equal\nExamples:\n```python\na = True\nb = 1\nc = 2\nd = b + c\ne = b / c\nprint(b == c)\nprint(b * e)\n print(d != e)\n```\noutput:\nFalse\n0.5\nTrue'
 						});
 					break;
 					//Tutorial 2
-					case '2':
+					case '3':
 						bot.sendMessage({
 							to: channelID,
 							message: 'If/Else Statements: ```python\nif case1:\n\t#whatever you want to happen\nelif case2:\n\t#whatever you want to happen if case1 is false, but case2 is true\nelse:\n\t#whatever you want to happen if case1 and case2 are both false/n```'
 						});
 					break;
-					//Tutorial 3
-					case '3':
-						bot.sendMessage({
-							to: channelID,
-							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run 5 times\n```'
-						});
-					break;
 					//Tutorial 4
 					case '4':
+						bot.sendMessage({
+							to: channelID,
+							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run n times\n```'
+						});
+					break;
+					//Tutorial 5
+					case '5':
 						bot.sendMessage({
 							to: channelID,
 							message: 'Functions: ```python\ndef func_name(args):\n\t#whatever the function does\n```'
@@ -189,7 +195,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					default:
 						bot.sendMessage({
 							to: channelID,
-							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\nTutorial 2 is if/else statements \nTutorial 3 is loops \nTutorial 4 is functions'
+							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\nTutorial 2 is variable types and operators\nTutorial 3 is if/else statements \nTutorial 4 is loops \nTutorial 5 is functions'
 						});
 					break;
 				}

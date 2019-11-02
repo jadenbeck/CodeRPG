@@ -1,0 +1,11 @@
+{
+  "name": "game-bot",
+  "version": "1.0.0",
+  "description": "Bot that teaches Python through a text-based game",
+  "main": "bot.js",
+  "author": "Jaden Max Mason and Andy",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "winston": "^3.2.1"
+  }
+}

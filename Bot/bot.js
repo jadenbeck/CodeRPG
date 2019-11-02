@@ -30,7 +30,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'help':
                 bot.sendMessage({
                     to: channelID,
-                    message: 'List of commands:\n!help: list of commands \n!start: starts a round of the rpg'
+                    message: 'List of commands:\n!help: list of commands \n!start: starts a round of the rpg \n!tutorial: explanations for simple python coding'
                 });
             break;
 			//tutorial

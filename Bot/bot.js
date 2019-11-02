@@ -36,10 +36,39 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			//tutorial
 			case 'tutorial':
 				switch(cmd2){
+					//Tutorial 1
 					case '1':
 						bot.sendMessage({
 							to: channelID,
-							message: 'print statements: ```python\nprint(\'Your Message\')\n```\nvariable assignment: ```python\nvar_name = value\n```'
+							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\n or: ```python\nprint(\'Your\', \'Messahe\')\n```\n Variable Assignment: ```python\nvar_name = value\n```'
+						});
+					break;
+					//Tutorial 2
+					case '2':
+						bot.sendMessage({
+							to: channelID,
+							message: 'If/Else Statements: ```python\nif case1:\n\t#whatever you want to happen\nelif case2:\n\t#whatever you want to happen if case1 is false, but case2 is true\nelse:\n\t#whatever you want to happen if case1 and case2 are both false/n```'
+						});
+					break;
+					//Tutorial 3
+					case '3':
+						bot.sendMessage({
+							to: channelID,
+							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run 5 times\n```'
+						});
+					break;
+					//Tutorial 4
+					case '4':
+						bot.sendMessage({
+							to: channelID,
+							message: 'Functions: ```python\ndef func_name(args):\n\t#whatever the function does\n```'
+						});
+					break;
+					//If no number entered, or number is out of range
+					default:
+						bot.sendMessage({
+							to: channelID,
+							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\n Tutorial 2 is if/else statements \nTutorial 3 is loops \n Tutorial 4 is functions'
 						});
 					break;
 				}

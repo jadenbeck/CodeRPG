@@ -23,15 +23,26 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
-       
+        var cmd2 = args[1];
         args = args.splice(1);
         switch(cmd) {
-            // !ping
+            // !help
             case 'help':
                 bot.sendMessage({
                     to: channelID,
                     message: 'List of commands:\n!help: list of commands \n!start: starts a round of the rpg'
                 });
+            break;
+			//tutorial
+			case 'tutorial':
+				switch(cmd2){
+					case '1':
+						bot.sendMessage({
+							to: channelID,
+							message: 'print statements: ```python\nprint(\'Your Message\')\n```\nvariable assignment: ```python\nvar_name = value\n```'
+						});
+					break;
+				}
             break;
             // Just add any case commands if you want to..
          }

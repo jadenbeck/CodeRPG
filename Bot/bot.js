@@ -57,20 +57,21 @@ class DBUserDatabase
 	updateFile()
 	{
 		const fs = require('fs');
-		fs.open('user_data.txt', 'w', function (err, file) {
+		fs.writeFileSync('user_data.txt', '', function (err, file) {
 			if (err) throw err;
 			});
         for (var i = 0; i < this.players.length; i++) 
         {
-			fs.appendFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + ' ' +this.players[i].getUserName() + '\n', function (err) {
-			});
-            
+			fs.appendFileSync('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + ' ' +this.players[i].getUserName() + '\n', function (err) {
+			});   
         }
     }
     addPlayer(DBUsername, name)
     {
-        this.players[this.players.length] = new DBUser(DBUsername, 1, false, name);
-		this.updateFile();
+		if (!this.hasUser(DBUsername)) {
+			this.players[this.players.length] = new DBUser(DBUsername, 1, false, name);
+			this.updateFile();
+		}
     }
     levelUp(userID)
     {
@@ -207,7 +208,7 @@ class RunCode {
 		}
 		else if (level == 5) {
 			console.log("Entered level 5");
-			fs.writeFileSync('pythonCode.py', "x = 6\ny = 13\n", function (err, file) {
+			fs.writeFileSync('pythonCode.py', "x = 692\ny = 134\n", function (err, file) {
 				if (err) throw err;
 			});
 			fs.appendFileSync('pythonCode.py', code, function (err, file) {
@@ -222,13 +223,22 @@ class RunCode {
 			fs.appendFileSync('pythonCode.py', code, function (err, file) {
 				if (err) throw err;
 			});
-			fs.appendFileSync('pythonCode.py', "x = 101\n", function (err, file) {
+			fs.appendFileSync('pythonCode.py', "\nx = 101\n", function (err, file) {
 				if (err) throw err;
 			});
 			fs.appendFileSync('pythonCode.py', code, function (err, file) {
 				if (err) throw err;
 			});
 
+		}
+		else if (level > 6 && level < 12) {
+			console.log("Entered level " + level);
+			fs.writeFileSync('pythonCode.py', "", function (err, file) {
+				if (err) throw err;
+			});
+			fs.appendFileSync('pythonCode.py', code, function (err, file) {
+				if (err) throw err;
+			});
 		}
 		
 		const { exec } = require('child_process');
@@ -274,10 +284,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 	//User input answers to the problems
 	if (playerDatabase.getInFight(userID) == true && message != "!cancel") {
 		if (message.substring(0,9) == "```python" && message.endsWith("```")) {
-			bot.sendMessage({
-				to: channelID,
-				message: 'I read that input as: ' + message.substring(9,message.length-3)
-			});
 			//Problem 1
 			if (playerDatabase.getUserLevel(userID) == 1) {
 				answer = "Begone slime!\r\n";
@@ -326,7 +332,22 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+						});
+				}
+				else
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'The output does not match the sample. Try again!'
+						});
+				}
 			}
+			//Problem 3
 			else if (playerDatabase.getUserLevel(userID) == 3) {
 				answer = "There are 5 bananas\r\n";
 				output = runUserCode.runPython(message, 3);
@@ -334,15 +355,31 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					to: channelID,
 					message: 'The output I got is: ' + output
 				});
-				if (output == answer) {
+				msg = message.substring(9,message.length-3).replace(/\s+/g, "");
+				if (output == answer && msg.includes("bananas=5")) {
 					bot.sendMessage({
 							to: channelID,
 							message: 'The monkey rewards you with the map and you escape the rainforest! You leveled up!'
-						});
+					});
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
+				else if (output == '')
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+						});
+				}
+				else
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'The output does not match the sample. Try again!'
+						});
+				}
 				}
 			}
+			//Problem 4
 			else if (playerDatabase.getUserLevel(userID) == 4) {
 				answer = "True Sally 7\r\n";
 				output = runUserCode.runPython(message, 4);
@@ -350,17 +387,32 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					to: channelID,
 					message: 'The output I got is: ' + output
 				});
-				if (output == answer) {
+				msg = message.substring(9,message.length-3).replace(/\s+/g, "");
+				if (output == answer && msg.includes("bones=True") && msg.includes('name="Sally"')&& msg.includes("apples=7")) {
 					bot.sendMessage({
 							to: channelID,
 							message: 'You escape the skeleton and level up!'
-						});
+					});
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+						});
+				}
+				else
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'The output does not match the sample. Try again!'
+						});
+				}
 			}
 			else if (playerDatabase.getUserLevel(userID) == 5) {
-				answer = "156\r\n";
+				answer = "1652\r\n";
 				output = runUserCode.runPython(message, 5);
 				bot.sendMessage({
 					to: channelID,
@@ -373,6 +425,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 						});
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
+				}
+				else if (output == '')
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+						});
+				}
+				else
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'The output does not match the sample. Try again!'
+						});
 				}
 			}
 			else if (playerDatabase.getUserLevel(userID) == 6) {
@@ -390,6 +456,172 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+						});
+				}
+				else
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'The output does not match the sample. Try again!'
+						});
+				}
+			}
+			else if (playerDatabase.getUserLevel(userID) == 7) {
+				answer = "Freedom!\r\n";
+				output = runUserCode.runPython(message, 7);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer and message.includes('if')) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You successfully freed the genie and got the water you needed! You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
+			}
+			else if (playerDatabase.getUserLevel(userID) == 8) {
+				answer = "1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8\r\n9\r\n10\r\n11\r\n12\r\n13\r\n14\r\n15\r\n16\r\n17\r\n18\r\n19\r\n20\r\n21\r\n22\r\n23\r\n24\r\n25\r\n";
+				output = runUserCode.runPython(message, 8);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer && (message.includes('for') || message.includes('while'))) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You successfully got past the Sith and saved the galaxy! You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
+			}
+			else if (playerDatabase.getUserLevel(userID) == 9) {
+				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n337\r\610";
+				output = runUserCode.runPython(message, 9);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer && (message.includes('for') || message.includes('while'))) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You saved your grade! You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
+			}
+			else if (playerDatabase.getUserLevel(userID) == 10) {
+				message = message + '\nprint(calculate_grades(95,98,96.5,100))'
+				answer = "97.375\r\n";
+				output = runUserCode.runPython(message, 10);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'SISman finally told you your grade! You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
+			}
+			else if (playerDatabase.getUserLevel(userID) == 11) {
+				message = message + '\nprint(find_area(6,7))'
+				answer = "42\r\n";
+				output = runUserCode.runPython(message, 11);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You got an A in math! You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 		}
 		else {
@@ -479,10 +711,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 						message: 'You are currently in a fight! Type !cancel to run away.'
 					});
 				}
-				else {
-					if (!playerDatabase.hasUser(userID)) {
-						playerDatabase.addPlayer(userID, user);
-					}
+				else 
+				{
+					playerDatabase.addPlayer(userID, user);
 					playerDatabase.setInFight(userID, true);
 					
 					if (playerDatabase.getUserLevel(userID) == 1) {
@@ -506,7 +737,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					else if (playerDatabase.getUserLevel(userID) == 4) {
 						bot.sendMessage({
 							to: channelID,
-							message: 'There is an invincible skeleton walking towards you, and you\'ve realized you cannot escape unless you divert its attention with the correct variables! There\'s only one way to divert its attention, if bones is true, if name is "Sally" and if apples is 7. Set these three variables and print these variables in this order!'
+							message: 'There is an invincible skeleton walking towards you, and you\'ve realized you cannot escape unless you divert its attention with the correct variables! There\'s only one way to divert its attention, if bones is true, if name is "Sally" and if apples is 7. Set these three variables and print these variables in this order on a single line!'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 5) {
@@ -524,13 +755,31 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					else if (playerDatabase.getUserLevel(userID) == 7) {
 						bot.sendMessage({
 							to: channelID,
-							message: ''
+							message: 'You are lost in the middle of the desert, and you are running low on water. Magically, you find a lamp and decide to rub it, hoping for a genie that way you can quench your thirst. Luckily the genie pops out of his lamp, but states that he is no ordinary genie. The genie tells you that he will give you what you most desire if you can code him out of being stuck back in the lamp after your three wishes. He gives you a hint, stating that you must make an if statement that takes the variable is_not_free and if it is not true, it must print "Freedom!".'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 8) {
 						bot.sendMessage({
 							to: channelID,
-							message: ''
+							message: 'In your many travels, you end up in space, where you have just stolen the Death Star plans. In order to escape, you must overload the Sith\'s computer system by printing the numbers 1 through 25 sequentially. But make your code brief, the Sith combatants are right on your tail!'
+						});
+					}
+					else if (playerDatabase.getUserLevel(userID) == 9) {
+						bot.sendMessage({
+							to: channelID,
+							message: 'Waking from your daydreams, you realize you are in math class and you teacher asked for the first 15 numbers from the fibbonaci sequence, and you don\'t have much time until the class is over! You need to quickly write a loop in order to to print the first 15 numbers, remember that the fibbonaci sequence is the number before it in the sequence added to the current number (ie. 1,1,2,3,5,...)'
+						});
+					}
+					else if (playerDatabase.getUserLevel(userID) == 10) {
+						bot.sendMessage({
+							to: channelID,
+							message: 'You are desperate to find out your grade, but SISman won\'t give you your average. SISman tells you he will give you the output if you give him a function called calculate_grades that takes four numbers as parameters and returns thier sum divided by four'
+						});
+					}
+					else if (playerDatabase.getUserLevel(userID) == 11) {
+						bot.sendMessage({
+							to: channelID,
+							message: 'Bored in math class again, and don\'t want to calculate the area of a rectangle anymore. Write a function find_area that takes two integers and finds the area of a rectangle with that hieght and width.'
 						});
 					}
 				}
@@ -538,9 +787,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			case 'cancel':
 				playerDatabase.setInFight(userID, false);
 			break;
+			default:
+				bot.sendMessage({
+							to: channelID,
+							message: 'Unrecognized command. Use "!help" to learn about CodeRPG commands.'
+						});
+			break;
          }
      }
 });
-
-
-//os.system(python user.py > output.txt);

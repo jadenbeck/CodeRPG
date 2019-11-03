@@ -501,6 +501,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             to: channelID,
                             message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
                         });
+                }else if (output == answer){
+					bot.sendMessage({
+                            to: channelID,
+                            message: 'Please use a if/else statement!'
+                        });
                 }
                 else
                 {
@@ -531,6 +536,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             to: channelID,
                             message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
                         });
+                }else if (output == answer){
+					bot.sendMessage({
+                            to: channelID,
+                            message: 'Please use a loop!'
+                        });
                 }
                 else
                 {
@@ -560,6 +570,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     bot.sendMessage({
                             to: channelID,
                             message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }else if (output == answer){
+					bot.sendMessage({
+                            to: channelID,
+                            message: 'Please use a loop!'
                         });
                 }
                 else

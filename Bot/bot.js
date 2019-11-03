@@ -172,22 +172,30 @@ class DBUser
 
 class RunCode {
 	
+	wait(ms)
+	{
+		var d = new Date();
+		var d2 = null;
+		do { d2 = new Date(); }
+		while(d2-d < ms);
+	}
+	
 	runPython(code, level) {
 		code = code.substring(9,code.length-3).trim();
 		var fs = require('fs');
 		
 		if (level == 1) {
 			console.log("Entered level 1");
-			fs.writeFile('pythonCode.py', code, function (err, file) {
+			fs.writeFileSync('pythonCode.py', code, function (err, file) {
 				if (err) throw err;
 			});
 		}
 		else if (level == 2) {
 			console.log("Entered level 2");
-			fs.writeFile('pythonCode.py', "lostCoins = 4128975847\n", function (err, file) {
+			fs.writeFileSync('pythonCode.py', "lostCoins = 4128975847\n", function (err, file) {
 				if (err) throw err;
 			});
-			fs.appendFile('pythonCode.py', code, function (err, file) {
+			fs.appendFileSync('pythonCode.py', code, function (err, file) {
 				if (err) throw err;
 			});
 		}
@@ -203,6 +211,8 @@ class RunCode {
 				// the *entire* stdout and stderr (buffered)
 			}
 		});
+		
+		this.wait(500);
 		
 		var fsIn = require('fs');
 		var userOut = fsIn.readFileSync('userOutput.txt');

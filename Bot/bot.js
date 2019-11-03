@@ -24,12 +24,31 @@ class DBUserDatabase
         this.players = new Array();
         this.length = this.players.length;
     }
+	    sortPlayers()
+    {  
+        this.players.sort(function(DBUser1, DBUser2) { return DBUser2.getLevel() - DBUser1.getLevel(); });
+    }
+    printLeaderboard(channelID)
+    {
+        this.sortPlayers();
+        var str = '';
+        for (var i = 0; i < this.players.length; i++) 
+        {
+           
+                str += "\n"+ (i+1) + ': ' + this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel()
+            
+        }
+          bot.sendMessage({
+            to: channelID,
+            message: str
+            });
+    }
 	readFromFile(){
 		var fs = require('fs');
 		var lines = fs.readFileSync('user_data.txt').toString().split("\n");
 		for (var i = 0; i < lines.length; i++){
+			if (lines[i] != ''){
 			var splitted = lines[i].split(" --> Level: ");
-			if (spitted[0] != ''){
 				this.players[this.players.length] = new DBUser(splitted[0],splitted[1]);
 			}
 		}
@@ -59,6 +78,30 @@ class DBUserDatabase
             if (this.players[i].getName() == userID)
             {
                 this.players[i].incrementLevel();
+                break;
+            }
+        }
+		
+		this.updateFile();
+    }
+	    getInFight(userID)
+    {
+        for (var i = 0; i < this.players.length; i++) 
+        {
+            if (this.players[i].getName() == userID)
+            {
+                return this.players[i].getInFight();
+                break;
+            }
+        }
+    }
+    setInFight(userID, value)
+    {
+        for (var i = 0; i < this.players.length; i++) 
+        {
+            if (this.players[i].getName() == userID)
+            {
+                this.players[i].setInFight(value);
                 break;
             }
         }
@@ -96,6 +139,10 @@ class DBUser
     {
         this.level++;
     }
+	setInFight(value)
+    {
+        this.inFight = value;
+    }
 }
 
 var playerDatabase = new DBUserDatabase();
@@ -129,6 +176,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: channelID,
                     message: 'List of commands:\n!help: list of commands \n!start: starts a round of the rpg'
                 });
+            }
+            break;
+			case 'leaderboard':
+            {
+                playerDatabase.printLeaderboard(channelID);
             }
             break;
             case 'configure':

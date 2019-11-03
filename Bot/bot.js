@@ -119,6 +119,16 @@ class DBUserDatabase
             });
         }
     }
+	setAll(channelID, level) {
+		for (var i = 0; i < this.players.length; i++) 
+        {
+			this.players[i].setLevel(level);
+        }
+		bot.sendMessage({
+                to: channelID,
+                message: "Set every player's levels to " + level
+            });
+	}
     hasUser(userID)
     {
     	var exists = false;
@@ -163,6 +173,9 @@ class DBUser
     {
         return this.level;
     }
+	setLevel(num) {
+		this.level = num;
+	}
     getInFight()
     {
         return this.inFight;
@@ -420,6 +433,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 						});
 				}
 			}
+			//Problem 5
 			else if (playerDatabase.getUserLevel(userID) == 5) {
 				answer = "1652\r\n";
 				output = runUserCode.runPython(message, 5);
@@ -450,6 +464,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 						});
 				}
 			}
+			//Problem 6
 			else if (playerDatabase.getUserLevel(userID) == 6) {
 				answer = "Correct\r\nIncorrect\r\n";
 				output = runUserCode.runPython(message, 6);
@@ -480,6 +495,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 						});
 				}
 			}
+			//Probelm 7
 			else if (playerDatabase.getUserLevel(userID) == 7) {
 				answer = "Freedom!\r\n";
 				output = runUserCode.runPython(message, 7);
@@ -515,6 +531,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         });
                 }
 			}
+			//Problem 8
 			else if (playerDatabase.getUserLevel(userID) == 8) {
 				answer = "1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8\r\n9\r\n10\r\n11\r\n12\r\n13\r\n14\r\n15\r\n16\r\n17\r\n18\r\n19\r\n20\r\n21\r\n22\r\n23\r\n24\r\n25\r\n";
 				output = runUserCode.runPython(message, 8);
@@ -550,8 +567,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         });
                 }
 			}
+			//Problem 9
 			else if (playerDatabase.getUserLevel(userID) == 9) {
-				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n337\r\n610\r\n";
+				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n377\r\n610\r\n";
 				output = runUserCode.runPython(message, 9);
 				bot.sendMessage({
 					to: channelID,
@@ -585,6 +603,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         });
                 }
 			}
+			//Problem 10
 			else if (playerDatabase.getUserLevel(userID) == 10) {
 				message = message;
 				answer = "97.375\r\n";
@@ -616,6 +635,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         });
                 }
 			}
+			//Problem 11
 			else if (playerDatabase.getUserLevel(userID) == 11) {
 				message = message;
 				answer = "42\r\n";
@@ -648,6 +668,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }
 			}
 		}
+		//Message formatted wrong
 		else {
 			bot.sendMessage({
 				to: channelID,
@@ -797,19 +818,24 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					else if (playerDatabase.getUserLevel(userID) == 10) {
 						bot.sendMessage({
 							to: channelID,
-							message: 'You are desperate to find out your grade, but SISman won\'t give you your average. SISman tells you he will give you the output if you give him a function called calculate_grades that takes four numbers as parameters and returns thier sum divided by four'
+							message: 'You are desperate to find out your grade, but SISman won\'t give you your average. SISman tells you he will give you the output if you give him a function called calculate_grades that takes four numbers as parameters and returns their sum divided by four'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 11) {
 						bot.sendMessage({
 							to: channelID,
-							message: 'Bored in math class again, and don\'t want to calculate the area of a rectangle anymore. Write a function find_area that takes two integers and finds the area of a rectangle with that hieght and width.'
+							message: 'Bored in math class again, and don\'t want to calculate the area of a rectangle anymore. Write a function find_area that takes two integers and finds the area of a rectangle with that height and width.'
 						});
 					}
 				}
 			break;
 			case 'cancel':
 				playerDatabase.setInFight(userID, false);
+			break;
+			//DEV FUNCTION: USE FOR DEMO
+			case 'setallscores':
+				cmd2 = parseInt(cmd2,10);
+				playerDatabase.setAll(channelID, cmd2);
 			break;
 			default:
 				bot.sendMessage({

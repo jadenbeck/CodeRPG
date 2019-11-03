@@ -184,8 +184,8 @@ class RunCode {
 		code = code.substring(9,code.length-3).trim();
 		var fs = require('fs');
 		
-		if (level == 1) {
-			console.log("Entered level 1");
+		if (level == 1 || level == 3 || level == 4) {
+			console.log("Entered level " + level);
 			fs.writeFileSync('pythonCode.py', code, function (err, file) {
 				if (err) throw err;
 			});
@@ -198,6 +198,31 @@ class RunCode {
 			fs.appendFileSync('pythonCode.py', code, function (err, file) {
 				if (err) throw err;
 			});
+		}
+		else if (level == 5) {
+			console.log("Entered level 5");
+			fs.writeFileSync('pythonCode.py', "x = 6\ny = 13\n", function (err, file) {
+				if (err) throw err;
+			});
+			fs.appendFileSync('pythonCode.py', code, function (err, file) {
+				if (err) throw err;
+			});
+		}
+		else if (level == 6) {
+			console.log("Entered level 6");
+			fs.writeFileSync('pythonCode.py', "x = 37\n", function (err, file) {
+				if (err) throw err;
+			});
+			fs.appendFileSync('pythonCode.py', code, function (err, file) {
+				if (err) throw err;
+			});
+			fs.appendFileSync('pythonCode.py', "x = 101\n", function (err, file) {
+				if (err) throw err;
+			});
+			fs.appendFileSync('pythonCode.py', code, function (err, file) {
+				if (err) throw err;
+			});
+
 		}
 		
 		const { exec } = require('child_process');
@@ -277,6 +302,70 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					bot.sendMessage({
 							to: channelID,
 							message: 'You successfully counted the lost coins! The goblin thanks you with a Bottle O\' Enchanting. You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+			}
+			else if (playerDatabase.getUserLevel(userID) == 3) {
+				answer = "There are 5 bananas\r\n";
+				output = runUserCode.runPython(message, 3);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'The monkey rewards you with the map and you escape the rainforest! You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+			}
+			else if (playerDatabase.getUserLevel(userID) == 4) {
+				answer = "True Sally 7\r\n";
+				output = runUserCode.runPython(message, 4);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You escape the skeleton and level up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+			}
+			else if (playerDatabase.getUserLevel(userID) == 5) {
+				answer = "156\r\n";
+				output = runUserCode.runPython(message, 5);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You enter the temple and retrieve the relics, 6 and 13 years old. You leveled up!'
+						});
+					playerDatabase.levelUp(userID);
+					playerDatabase.setInFight(userID, false);
+				}
+			}
+			else if (playerDatabase.getUserLevel(userID) == 6) {
+				answer = "Correct\r\nIncorrect\r\n";
+				output = runUserCode.runPython(message, 6);
+				bot.sendMessage({
+					to: channelID,
+					message: 'The output I got is: ' + output
+				});
+				if (output == answer) {
+					bot.sendMessage({
+							to: channelID,
+							message: 'You escape the bitter cold of the wintry tundra and conveniently earn 10,000 gold coins! You leveled up!'
 						});
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
@@ -391,25 +480,25 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					else if (playerDatabase.getUserLevel(userID) == 3) {
 						bot.sendMessage({
 							to: channelID,
-							message: ''
+							message: 'You are walking through the dense rainforest in the midst of night, lost, without any sense of direction. Suddenly, a monkey swings by, demanding five bananas, in return for a map which will help you escape your damp surroundings. Set the variable bananas to 5 and use the variable in a print statement so that it reads "There are 5 bananas".'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 4) {
 						bot.sendMessage({
 							to: channelID,
-							message: ''
+							message: 'There is an invincible skeleton walking towards you, and you\'ve realized you cannot escape unless you divert its attention with the correct variables! There\'s only one way to divert its attention, if bones is true, if name is "Sally" and if apples is 7. Set these three variables and print these variables in this order!'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 5) {
 						bot.sendMessage({
 							to: channelID,
-							message: ''
+							message: 'You approach the Temple of Ahuizotl and two guardian statues, clad in obsidian armor and holding mossy granite axes loom over you. You attempt to enter the desolate ancient structure, when suddenly, the axes come crashing down in front of you. The guardian statues speak: \nStatue 1: If treasure here is what you seek, \nStatue 2: Then solve this problem which we shall speak. \nStatue 1: To succeed you cannot be weak, \nStatue 2: But must be a Python geek! \nBoth: If the ages of the relics contained are x and y, then what is two times the sum of these variables. Using variables x and y, print this value!'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 6) {
 						bot.sendMessage({
 							to: channelID,
-							message: ''
+							message: 'The evening draws close, the tundra is freezing. The wind howls as it chills the unprotected skin of your face, and the trees above shade you from the little remaining sunlight. Your energy is fading and you need shelter. You need warmth, and time is running out. Luckily, you soon come across a cave, and heat emanates from within. Why? You don\'t know, but frankly, it doesn\'t matter. As you delve deeper into the cave, the darkness gives way to a glistening light, one which can only come from the most precious of metals--gold. You turn the corner, and your vision spans across the ocean of light, one which you had never expected within such darkness. Crowns, rings, coins, even the ancient artifact of Aeolus! And... a dragon. Sensing your presence, the dragon awakes. You turn to run, but the dragon quickly blocks your path and speaks. \nDragon: I am thinking of a number, x. I cannot tell you what it is, but if you write a certain program for me which prints "Correct" only if the number if less than 100, and "Incorrect" otherwise, I can let you stay here for the evening, and you will earn half of my gold coins. Be warned, I WILL test your code... and if you fail...'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 7) {

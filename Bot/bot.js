@@ -122,10 +122,11 @@ class DBUserDatabase
 
 class DBUser 
 {
-    constructor(name, level) 
+    constructor(name, level, inFight) 
     {
         this.name = name;
         this.level = level;
+        this.inFight = inFight;
     }
     getName()
     {
@@ -135,16 +136,19 @@ class DBUser
     {
         return this.level;
     }
+    getInFight()
+    {
+        return this.inFight;
+    }
     incrementLevel()
     {
         this.level++;
     }
-	setInFight(value)
+    setInFight(value)
     {
         this.inFight = value;
     }
 }
-
 var playerDatabase = new DBUserDatabase();
 
 

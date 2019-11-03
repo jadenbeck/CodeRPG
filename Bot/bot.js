@@ -473,7 +473,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			}
 			else if (playerDatabase.getUserLevel(userID) == 7) {
 				answer = "Freedom!\r\n";
-				output = runUserCode.runPython('is_not_free = False'+message, 7);
+				output = runUserCode.runPython('is_not_free = False\n'+message, 7);
 				bot.sendMessage({
 					to: channelID,
 					message: 'The output I got is: ' + output

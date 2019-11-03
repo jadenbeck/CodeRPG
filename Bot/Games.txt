@@ -1,4 +1,5 @@
 Tutorial 1
+<<<<<<< HEAD
 1. Print simple ()
 2. Print concatenation ()
 3. Initialize variable and print 

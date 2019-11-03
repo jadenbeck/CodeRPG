@@ -199,9 +199,9 @@ class RunCode {
 				if (err) throw err;
 			});
 		}
-		else if (level == 7) {
-			console.log("Entered level 7");
-			fs.writeFileSync('pythonCode.py', "lostCoins = 4128975847\n", function (err, file) {
+		else if (level > 6 && level < 12) {
+			console.log("Entered level " + level);
+			fs.writeFileSync('pythonCode.py', "", function (err, file) {
 				if (err) throw err;
 			});
 			fs.appendFileSync('pythonCode.py', code, function (err, file) {

@@ -14,7 +14,6 @@ var bot = new Discord.Client({
    autorun: true
 });
 
-
 //var length;
 class DBUserDatabase
 {
@@ -25,8 +24,7 @@ class DBUserDatabase
         this.players = new Array();
         this.length = this.players.length;
     }
-<<<<<<< HEAD
-    sortPlayers()
+	    sortPlayers()
     {  
         this.players.sort(function(DBUser1, DBUser2) { return DBUser2.getLevel() - DBUser1.getLevel(); });
     }
@@ -45,16 +43,12 @@ class DBUserDatabase
             message: str
             });
     }
-    addPlayer(DBUsername)
-    {
-        this.players[this.players.length] = new DBUser(DBUsername, 1, false);
-=======
 	readFromFile(){
 		var fs = require('fs');
 		var lines = fs.readFileSync('user_data.txt').toString().split("\n");
 		for (var i = 0; i < lines.length; i++){
+			if (lines[i] != ''){
 			var splitted = lines[i].split(" --> Level: ");
-			if (spitted[0] != ''){
 				this.players[this.players.length] = new DBUser(splitted[0],splitted[1]);
 			}
 		}
@@ -87,12 +81,10 @@ class DBUserDatabase
                 break;
             }
         }
-        /*bot.sendMessage({
-            to: channelID,
-            message: userID + ' has leveled up!'
-        });*/
+		
+		this.updateFile();
     }
-    getInFight(userID)
+	    getInFight(userID)
     {
         for (var i = 0; i < this.players.length; i++) 
         {
@@ -122,7 +114,7 @@ class DBUserDatabase
         {
             bot.sendMessage({
                 to: channelID,
-                message: this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + ' --> Currently in battle? ' + this.players[i].getInFight()
+                message: this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel()
             });
         }
     }
@@ -130,11 +122,10 @@ class DBUserDatabase
 
 class DBUser 
 {
-    constructor(name, level, inFight) 
+    constructor(name, level) 
     {
         this.name = name;
         this.level = level;
-        this.inFight = inFight;
     }
     getName()
     {
@@ -144,15 +135,11 @@ class DBUser
     {
         return this.level;
     }
-    getInFight()
-    {
-        return this.inFight;
-    }
     incrementLevel()
     {
         this.level++;
     }
-    setInFight(value)
+	setInFight(value)
     {
         this.inFight = value;
     }
@@ -172,6 +159,7 @@ bot.on('ready', function (evt) {
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
+
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     if (message.substring(0, 1) == '!') {
@@ -188,6 +176,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: channelID,
                     message: 'List of commands:\n!help: list of commands \n!start: starts a round of the rpg'
                 });
+            }
+            break;
+			case 'leaderboard':
+            {
+                playerDatabase.printLeaderboard(channelID);
             }
             break;
             case 'configure':
@@ -211,16 +204,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'everyone':
             {
                 playerDatabase.printAll(channelID);
-            }
-            break;
-            case 'start':
-            {
-                playerDatabase.setInFight(userID, true);
-            }
-            break;
-            case 'leaderboard':
-            {
-                playerDatabase.printLeaderboard(channelID);
             }
             break;
 			//tutorial

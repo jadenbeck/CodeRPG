@@ -1,0 +1,26 @@
+Tutorial 1
+1. Print simple (*)
+2. Print concatenation (*)
+3. Initialize variable and print 
+	You are walking through the dense rainforest in the midst of night, lost, without
+any sense of direction. Suddenly, a monkey swings by, demanding five bananas, in return for a
+map. Set the variable bananas to 5 and  
+
+Tutorial 2
+4. Variable types (set a variable to the boolean true, set a variable to
+	the string "Hello", and set a variable to the integer 5, and print the three variables in
+	this order)
+5. Variable operations (create two variables x and y and add them, and multiply them by z
+	to make a so that a = 10, print all variables in the order x, y, z, a)
+
+Tutorial 3
+6. Conditionals 1 - Comparison operators
+	Write code that will print "..." only if some variable x is less than 10)
+7. Conditionals 2 
+	Write code that will print "..." if the .. is ... or... or... (make use of !=)
+
+Tutorial 4
+8. Loops 1
+	Use a while loop to print the numbers from 0 to 100.
+9. Loops 2
+	Use a for loop to 

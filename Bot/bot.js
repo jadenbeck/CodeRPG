@@ -35,7 +35,7 @@ class DBUserDatabase
         for (var i = 0; i < this.players.length; i++) 
         {
            
-                str += "\n"+ (i+1) + ': ' + this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel()
+                str += "\n"+ (i+1) + ': ' + this.players[i].getUserName() + ' --> Level: ' + this.players[i].getLevel()
             
         }
           bot.sendMessage({
@@ -49,7 +49,8 @@ class DBUserDatabase
 		for (var i = 0; i < lines.length; i++){
 			if (lines[i] != ''){
 			var splitted = lines[i].split(" --> Level: ");
-				this.players[this.players.length] = new DBUser(splitted[0],splitted[1]);
+			var split2 = splitted[1].split(' ')
+				this.players[this.players.length] = new DBUser(splitted[0],split2[0],false, split2[1]);
 			}
 		}
 	}
@@ -61,14 +62,14 @@ class DBUserDatabase
 			});
         for (var i = 0; i < this.players.length; i++) 
         {
-			fs.appendFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + '\n', function (err) {
+			fs.appendFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + ' ' +this.players[i].getUserName() + '\n', function (err) {
 			});
             
         }
     }
-    addPlayer(DBUsername)
+    addPlayer(DBUsername, name)
     {
-        this.players[this.players.length] = new DBUser(DBUsername, 1);;
+        this.players[this.players.length] = new DBUser(DBUsername, 1, false, name);
 		this.updateFile();
     }
     levelUp(userID)
@@ -142,15 +143,20 @@ class DBUserDatabase
 
 class DBUser 
 {
-    constructor(name, level, inFight) 
+    constructor(name, level, inFight, userName) 
     {
         this.name = name;
         this.level = level;
         this.inFight = inFight;
+        this.userName = userName;
     }
     getName()
     {
         return this.name;    
+    }
+    getUserName()
+    {
+    	return this.userName;
     }
     getLevel()
     {
@@ -289,6 +295,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+						});
+				}
+				else
+				{
+					bot.sendMessage({
+							to: channelID,
+							message: 'The output does not match the sample. Try again!'
+						});
+				}
 			}
 			//Problem 2
 			else if (playerDatabase.getUserLevel(userID) == 2) {
@@ -392,7 +412,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             {
                 bot.sendMessage({
                     to: channelID,
-                    message: 'List of commands:\n!help: list of commands \n!start: starts a round of the rpg'
+                    message: 'List of commands:\n!help: list of commands \n!start: starts a round of the RPG based on your level\n!cancel: cancels current round of RPG\n!leaderboard: prints leaderboard \n!tutorial: prints list of tutorials (1-5) \n!tutorial 1: tutorial for print statements and variable declaration \n!tutorial 2: tutorial for variable types and operations \n!tutorial 3: tutorial for conditional statements \n!tutorial 4: tutorial for loops \n!tutorial 5: tutorial for implementing functions'
                 });
             }
             break;
@@ -461,7 +481,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 				}
 				else {
 					if (!playerDatabase.hasUser(userID)) {
-						playerDatabase.addPlayer(userID);
+						playerDatabase.addPlayer(userID, user);
 					}
 					playerDatabase.setInFight(userID, true);
 					

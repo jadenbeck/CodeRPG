@@ -18,10 +18,23 @@ Tutorial 3
 6. Conditionals 1 - Comparison operators
     Write code that will print "..." only if some variable x is less than 10)
 7. Conditionals 2 
-    Write code that will print "..." if the .. is ... or... or... (make use of !=)
+    You are lost in the middle of the desert, and you are running low on water. Magically, you find a lamp and decide to rub it, hoping for a genie that way you can quench
+	your thirst. Luckily the genie pops out of his lamp, but states that he is no ordinary genie. The genie tells you that he will give you what you most desire if you can
+	code him out of being stuck back in the lamp after your three wishes. He gives you a hint, stating that you must make an if statement that takes the variable is_not_free and
+	if it is not true, it must print "Freedom!".
 
 Tutorial 4
 8. Loops 1
-    Use a while loop to print the numbers from 0 to 100.
+    In your many travels, you nd up in space, where you have just stolen the Death Star plans. In order to escape, you must overload the Sith's computer system by printing the numbers
+	1 through 100 sequentially. But make your code brief, the Sith combatants are right on your tail!
 9. Loops 2
-    Use a for loop to
+    Waking from your daydreams, you realize you are in math class and you teacher asked for the first 15 numbers from the fibbonaci sequence, and you don't have much time until
+	the class is over! You need to quickly write a loop in order to to print the first 15 numbers, remember that the fibbonaci sequence is the number before it in the sequence
+	added to the current number (ie. 1,1,2,3,5,...)
+Tutorial 5
+10. Functions 1
+	You are desperate to find out your grade, but SISman won't give you your average. SISman tells you he will give you the output if you give him a 
+	function called calculate_grades that takes four numbers as parameters and returns thier sum divided by four
+11. Functions 2
+	Bored in math class again, and don't want to calculate the area of a rectangle anymore. Write a function find_area that takes two integers and finds the area
+	of a rectangle with that hieght and width.

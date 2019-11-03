@@ -187,24 +187,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 playerDatabase.printLeaderboard(channelID);
             }
             break;
-            case 'configure':
-            {
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Hello, ' + user
-                });
-                playerDatabase.addPlayer(userID);
-            }    
-            break;
-            case 'levelup':
-            {
-                playerDatabase.levelUp(userID);
-				bot.sendMessage({
-					to: channelID,
-					message: userID + ' has leveled up!'
-				});
-            }
-            break;
             case 'everyone':
             {
                 playerDatabase.printAll(channelID);
@@ -226,25 +208,25 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 							message: 'Variable Types:\nboolean: True or False\ninteger: a whole number\nfloat: a decimal\nstring: any word or words\n\nOperators:\n+: adds two values\n-: subtracts two values\n*: multiplies two values\n/: divides two values\n==: returns if two things on either side are equal\n!=: returns if two things are not equal\nExamples:\n```python\na = True\nb = 1\nc = 2\nd = b + c\ne = b / c\nprint(b == c)\nprint(b * e)\n print(d != e)\n```\noutput:\nFalse\n0.5\nTrue'
 						});
 					break;
-					//Tutorial 2
+					//Tutorial 3
 					case '3':
 						bot.sendMessage({
 							to: channelID,
-							message: 'If/Else Statements: ```python\nif case1:\n\t#whatever you want to happen\nelif case2:\n\t#whatever you want to happen if case1 is false, but case2 is true\nelse:\n\t#whatever you want to happen if case1 and case2 are both false/n```'
+							message: 'If/Else Statements: ```python\nif case1:\n\t#whatever you want to happen\nelif case2:\n\t#whatever you want to happen if case1 is false, but case2 is true\nelse:\n\t#whatever you want to happen if case1 and case2 are both false/n```\nNote: case1 and case2 are booleans or conditionals'
 						});
 					break;
 					//Tutorial 4
 					case '4':
 						bot.sendMessage({
 							to: channelID,
-							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run n times\n```'
+							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run n times\n```\nNote: case1 is a boolean or conditional'
 						});
 					break;
 					//Tutorial 5
 					case '5':
 						bot.sendMessage({
 							to: channelID,
-							message: 'Functions: ```python\ndef func_name(args):\n\t#whatever the function does\n```'
+							message: 'Functions: ```python\ndef func_name(args):\n\t#whatever the function does\n```\nWhere args are variable names to be used in the function and func_name is the name of the function'
 						});
 					break;
 					//If no number entered, or number is out of range
@@ -256,7 +238,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					break;
 				}
             break;
-            // Just add any case commands if you want to..
          }
      }
 });

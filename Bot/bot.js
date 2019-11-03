@@ -363,6 +363,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					});
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
+				}
 				else if (output == '')
 				{
 					bot.sendMessage({
@@ -376,7 +377,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 							to: channelID,
 							message: 'The output does not match the sample. Try again!'
 						});
-				}
 				}
 			}
 			//Problem 4
@@ -478,7 +478,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					to: channelID,
 					message: 'The output I got is: ' + output
 				});
-				if (output == answer and message.includes('if')) {
+				if (output == answer && message.includes('if')) {
 					bot.sendMessage({
 							to: channelID,
 							message: 'You successfully freed the genie and got the water you needed! You leveled up!'

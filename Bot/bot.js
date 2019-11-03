@@ -551,7 +551,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 9) {
-				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n337\r\610";
+				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n337\r\n610\r\n";
 				output = runUserCode.runPython(message, 9);
 				bot.sendMessage({
 					to: channelID,
@@ -791,7 +791,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					else if (playerDatabase.getUserLevel(userID) == 9) {
 						bot.sendMessage({
 							to: channelID,
-							message: 'Waking from your daydreams, you realize you are in math class and you teacher asked for the first 15 numbers from the fibbonaci sequence, and you don\'t have much time until the class is over! You need to quickly write a loop in order to to print the first 15 numbers, remember that the fibbonaci sequence is the number before it in the sequence added to the current number (ie. 1,1,2,3,5,...)'
+							message: 'Waking from your daydreams, you realize you are in math class and you teacher asked for the first 15 numbers from the Fibonacci sequence, and you don\'t have much time until the class is over! You need to quickly write a loop in order to to print the first 15 numbers, remember that the Fibonacci sequence is the number before it in the sequence added to the current number (ie. 1,1,2,3,5,...)'
 						});
 					}
 					else if (playerDatabase.getUserLevel(userID) == 10) {

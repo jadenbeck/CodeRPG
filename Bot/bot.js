@@ -233,6 +233,15 @@ class RunCode {
 		}
 		else if (level > 6 && level < 12) {
 			console.log("Entered level " + level);
+			if (level == 7) {
+				code = 'is_not_free = False\n' + code;
+			}
+			else if (level == 10) {
+				code = code + '\nprint(calculate_grades(95,98,96.5,100))';
+			}
+			else if (level == 11) {
+				code = code + '\nprint(find_area(6,7))';
+			}
 			fs.writeFileSync('pythonCode.py', "", function (err, file) {
 				if (err) throw err;
 			});
@@ -473,7 +482,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			}
 			else if (playerDatabase.getUserLevel(userID) == 7) {
 				answer = "Freedom!\r\n";
-				output = runUserCode.runPython('is_not_free = False\n'+message, 7);
+				output = runUserCode.runPython(message, 7);
 				bot.sendMessage({
 					to: channelID,
 					message: 'The output I got is: ' + output
@@ -562,7 +571,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 10) {
-				message = message + '\nprint(calculate_grades(95,98,96.5,100))'
+				message = message;
 				answer = "97.375\r\n";
 				output = runUserCode.runPython(message, 10);
 				bot.sendMessage({
@@ -593,7 +602,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 11) {
-				message = message + '\nprint(find_area(6,7))'
+				message = message;
 				answer = "42\r\n";
 				output = runUserCode.runPython(message, 11);
 				bot.sendMessage({

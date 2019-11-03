@@ -289,6 +289,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 7) {
 				answer = "Freedom!\r\n";
@@ -305,6 +319,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 8) {
 				answer = "1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8\r\n9\r\n10\r\n11\r\n12\r\n13\r\n14\r\n15\r\n16\r\n17\r\n18\r\n19\r\n20\r\n21\r\n22\r\n23\r\n24\r\n25\r\n";
@@ -321,6 +349,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 9) {
 				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n337\r\610";
@@ -337,22 +379,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
-			}
-			else if (playerDatabase.getUserLevel(userID) == 9) {
-				answer = "1\r\n1\r\n2\r\n3\r\n5\r\n8\r\n13\r\n21\r\n34\r\n55\r\n89\r\n144\r\n233\r\n337\r\610";
-				output = runUserCode.runPython(message, 9);
-				bot.sendMessage({
-					to: channelID,
-					message: 'The output I got is: ' + output
-				});
-				if (output == answer && (message.includes('for') || message.includes('while'))) {
-					bot.sendMessage({
-							to: channelID,
-							message: 'You saved your grade! You leveled up!'
-						});
-					playerDatabase.levelUp(userID);
-					playerDatabase.setInFight(userID, false);
-				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 10) {
 				message = message + '\nprint(calculate_grades(95,98,96.5,100))'
@@ -370,6 +410,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 			else if (playerDatabase.getUserLevel(userID) == 11) {
 				message = message + '\nprint(find_area(6,7))'
@@ -387,6 +441,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					playerDatabase.levelUp(userID);
 					playerDatabase.setInFight(userID, false);
 				}
+				else if (output == '')
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'Your code had no output. Make sure your code is formatted properly! Try again!'
+                        });
+                }
+                else
+                {
+                    bot.sendMessage({
+                            to: channelID,
+                            message: 'The output does not match the sample. Try again!'
+                        });
+                }
 			}
 		}
 		else {

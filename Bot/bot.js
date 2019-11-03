@@ -122,8 +122,9 @@ class DBUserDatabase
     	var exists = false;
     	for (var i = 0; i < this.players.length; i++) 
         {
-            if (userID = this.players[i].getName())
+            if (userID == this.players[i].getName()) {
             	exists = true;
+			}
         }
         return exists;
     }
@@ -168,6 +169,7 @@ class DBUser
         this.inFight = value;
     }
 }
+
 class RunCode {
 	
 	runPython(code, level) {
@@ -199,13 +201,12 @@ class RunCode {
 			}
 			else {
 				// the *entire* stdout and stderr (buffered)
-				console.log(`stdout: ${stdout}`);
-				console.log(`stderr: ${stderr}`);
 			}
 		});
 		
 		var fsIn = require('fs');
-		var userOut = fsIn.readFileSync('userOutput.txt').toString();
+		var userOut = fsIn.readFileSync('userOutput.txt');
+		userOut = userOut.toString();
 		console.log(userOut);
 		return userOut;
 	}

@@ -316,6 +316,26 @@ bot.on('ready', function (evt) {
 bot.on('message', function (user, userID, channelID, message, evt) {
 	
 	//User input answers to the problems
+	if (playerDatabase.getInFight(userID) == false && message.substring(0,1) != '!') {
+		if (message.toLowerCase().includes("thanks coderpg")) {
+			bot.sendMessage({
+				to: channelID,
+				message: 'No problem, ' + user + '!'
+			});
+		}
+		if (message.toLowerCase().includes("coderpg sucks")) {
+			bot.sendMessage({
+				to: channelID,
+				message: 'No u ' + user + ' :angry:'
+			});
+		}
+		if (message.toLowerCase().includes("love coderpg") || message.toLowerCase().includes("love you coderpg")) {
+			bot.sendMessage({
+				to: channelID,
+				message: ':kissing_heart:'
+			});
+		}
+	}
 	if (playerDatabase.getInFight(userID) == true && message != "!cancel") {
 		if (message.substring(0,9) == "```python" && message.endsWith("```")) {
 			//Problem 1
@@ -684,7 +704,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 		else {
 			bot.sendMessage({
 				to: channelID,
-				message: 'Formatted incorrectly! Make sure your message starts with "\\`\\`\\`python" and ends with "\\`\\`\\`". If you want to cancel, just type "!cancel"'
+				message: 'Formatted incorrectly! Make sure your message starts with "\\`\\`\\`python" and ends with "\\`\\`\\`". Your code should look like the following:\n\n\\`\\`\\`python\nprint("Hello world!")\n\\`\\`\\`\n\n If you want to cancel, just type "!cancel"'
 			});
 		}
 	}
@@ -701,7 +721,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             {
                 bot.sendMessage({
                     to: channelID,
-                    message: 'List of commands:\n!help: list of commands \n!start: starts a round of the RPG based on your level\n!cancel: cancels current round of RPG\n!leaderboard: prints leaderboard \n!tutorial: prints list of tutorials (1-5) \n!tutorial 1: tutorial for print statements and variable declaration \n!tutorial 2: tutorial for variable types and operations \n!tutorial 3: tutorial for conditional statements \n!tutorial 4: tutorial for loops \n!tutorial 5: tutorial for implementing functions'
+                    message: 'List of commands:\n__!help__: list of commands \n__!start__: starts a round of the RPG based on your level\n__!cancel__: cancels current round of RPG\n__!leaderboard__: prints leaderboard \n!__tutorial__: prints list of tutorials (0-5) \n__!tutorial 0__: tutorial on how to format your answers \n__!tutorial 1__: tutorial for print statements and variable declaration \n__!tutorial 2__: tutorial for variable types and operations \n__!tutorial 3__: tutorial for conditional statements \n__!tutorial 4__: tutorial for loops \n__!tutorial 5__: tutorial for implementing functions'
                 });
             }
             break;
@@ -718,6 +738,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			//tutorial
 			case 'tutorial':
 				switch(cmd2){
+					//Tutorial 0
+					case '0':
+						bot.sendMessage({
+							to: channelID,
+							message: '**Entering your responses:**\nWhen you try to progress through the game and give an answer to a problem, your code should look like the following:\n\n\\`\\`\\`python\nprint("Hello world!")\n\\`\\`\\`\n\nThis will format your code correctly, making it easier to read, and is required for the game to function.'
+						});
+					break
 					//Tutorial 1
 					case '1':
 						bot.sendMessage({
@@ -728,35 +755,35 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					case '2':
 						bot.sendMessage({
 							to: channelID,
-							message: 'Variable Types:\nboolean: True or False\ninteger: a whole number\nfloat: a decimal\nstring: any word or words\n\nOperators:\n+: adds two values\n-: subtracts two values\n*: multiplies two values\n/: divides two values\n==: returns if two things on either side are equal\n!=: returns if two things are not equal\nExamples:\n```python\na = True\nb = 1\nc = 2\nd = b + c\ne = b / c\nprint(b == c)\nprint(b * e)\n print(d != e)\n```\noutput:\nFalse\n0.5\nTrue'
+							message: 'Variable Types:\nboolean: True or False\ninteger: a whole number\nfloat: a decimal\nstring: any word or words\n\nOperators:\n+: adds two values\n-: subtracts two values\n*: multiplies two values\n/: divides two values\nThe following values return a boolean (True or False):\n==: returns if two things on either side are equal\n!=: returns if two things are not equal\n<: returns if a value is less than another\n>: returns if a value is greater than another\n<=: returns if a value is less than or equal to another\n>=: returns if a value is greater than or equal to another\nExamples:\n```python\na = True\nb = 1\nc = 2\nd = b + c\ne = b / c\nprint(b == c)\nprint(b * e)\nprint(d != e)\nprint(c > b)\nprint(c < b)\n```\noutput:\nFalse\n0.5\nTrue\nTrue\nFalse'
 						});
 					break;
 					//Tutorial 3
 					case '3':
 						bot.sendMessage({
 							to: channelID,
-							message: 'If/Else Statements: ```python\nif case1:\n\t#whatever you want to happen\nelif case2:\n\t#whatever you want to happen if case1 is false, but case2 is true\nelse:\n\t#whatever you want to happen if case1 and case2 are both false/n```\nNote: case1 and case2 are booleans or conditionals'
+							message: 'If/Else Statements: ```python\nif case1:\n\t#Whatever you want to happen if case1 is true\n\t#There may be however many lines you like here, as long as they are indented\nelif case2:\n\t#Whatever you want to happen if case1 is false but case2 is true\n\t#There may be however many lines you like here, as long as they are indented\nelse:\n\t#Whatever you want to happen if case1 and case2 are false\n\t#There may be however many lines you like here, as long as they are indented\n```\nNote: case1 and case2 are booleans or conditionals'
 						});
 					break;
 					//Tutorial 4
 					case '4':
 						bot.sendMessage({
 							to: channelID,
-							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run n times\n```\nNote: case1 is a boolean or conditional'
+							message: 'While Loops: ```python\nwhile case1:\n\t#Whatever you want to happen until case1 is false\n\t#There may be however many lines you like here, as long as they are indented\n```\nFor Loops: ```python\nfor i in range(n):\n\t#Whatever you want to run n times\n\t#There may be however many lines you like here, as long as they are indented\n```\nNote: case1 is a boolean or conditional'
 						});
 					break;
 					//Tutorial 5
 					case '5':
 						bot.sendMessage({
 							to: channelID,
-							message: 'Functions: ```python\ndef func_name(args):\n\t#whatever the function does\n```\nWhere args are variable names to be used in the function and func_name is the name of the function'
+							message: 'Functions: ```python\ndef func_name(args):\n\t#Whatever the function does\n\t#There may be however many lines you like here, as long as they are indented\n\treturn 5\n```\nWhere args are variable names to be used in the function and func_name is the name of the function. The function "returns" a value, which in this case is 5. In this case, print(func_name(args)) would print out "5"'
 						});
 					break;
 					//If no number entered, or number is out of range
 					default:
 						bot.sendMessage({
 							to: channelID,
-							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\nTutorial 2 is variable types and operators\nTutorial 3 is if/else statements \nTutorial 4 is loops \nTutorial 5 is functions'
+							message: 'Add a number after tutorial \n__Tutorial 0__: How to format your answers\n__Tutorial 1__: print statements and variable assignment\n__Tutorial 2__: variable types and operators\n__Tutorial 3__: if/else statements \n__Tutorial 4__: loops \n__Tutorial 5__: functions'
 						});
 					break;
 				}
@@ -843,6 +870,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			break;
 			case 'cancel':
 				playerDatabase.setInFight(userID, false);
+				bot.sendMessage({
+						to: channelID,
+						message: 'Your current event has been canceled. You are now free to use any CodeRPG commands!'
+					});
 			break;
 			//DEV FUNCTION: USE FOR DEMO
 			case 'setallscores':

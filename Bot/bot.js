@@ -25,6 +25,7 @@ class DBUserDatabase
         this.players = new Array();
         this.length = this.players.length;
     }
+<<<<<<< HEAD
     sortPlayers()
     {  
         this.players.sort(function(DBUser1, DBUser2) { return DBUser2.getLevel() - DBUser1.getLevel(); });
@@ -47,6 +48,34 @@ class DBUserDatabase
     addPlayer(DBUsername)
     {
         this.players[this.players.length] = new DBUser(DBUsername, 1, false);
+=======
+	readFromFile(){
+		var fs = require('fs');
+		var lines = fs.readFileSync('user_data.txt').toString().split("\n");
+		for (var i = 0; i < lines.length; i++){
+			var splitted = lines[i].split(" --> Level: ");
+			if (spitted[0] != ''){
+				this.players[this.players.length] = new DBUser(splitted[0],splitted[1]);
+			}
+		}
+	}
+	updateFile()
+	{
+		const fs = require('fs');
+		fs.open('user_data.txt', 'w', function (err, file) {
+			if (err) throw err;
+			});
+        for (var i = 0; i < this.players.length; i++) 
+        {
+			fs.appendFile('user_data.txt', this.players[i].getName() + ' --> Level: ' + this.players[i].getLevel() + '\n', function (err) {
+			});
+            
+        }
+    }
+    addPlayer(DBUsername)
+    {
+        this.players[this.players.length] = new DBUser(DBUsername, 1);;
+		this.updateFile();
     }
     levelUp(userID)
     {
@@ -84,6 +113,8 @@ class DBUserDatabase
                 break;
             }
         }
+		
+		this.updateFile();
     }
     printAll(channelID)
     {
@@ -134,6 +165,10 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
+	var fs = require('fs');
+	if (fs.readFileSync('user_data.txt').toString() != ''){
+		playerDatabase.readFromFile();
+	}
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
@@ -167,6 +202,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'levelup':
             {
                 playerDatabase.levelUp(userID);
+				bot.sendMessage({
+					to: channelID,
+					message: userID + ' has leveled up!'
+				});
             }
             break;
             case 'everyone':
@@ -191,25 +230,31 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					case '1':
 						bot.sendMessage({
 							to: channelID,
-							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\n or: ```python\nprint(\'Your\', \'Messahe\')\n```\n Variable Assignment: ```python\nvar_name = value\n```'
+							message: 'Print Statements: ```python\nprint(\'Your Message\')\n```\noutput: Your Message\nor: ```python\nprint(\'Your\', \'Message\')\n```\noutput: Your Message Variable Assignment: ```python\nvar_name = value\nprint(var_name)\n``` output: value'
+						});
+					break;
+					case '2':
+						bot.sendMessage({
+							to: channelID,
+							message: 'Variable Types:\nboolean: True or False\ninteger: a whole number\nfloat: a decimal\nstring: any word or words\n\nOperators:\n+: adds two values\n-: subtracts two values\n*: multiplies two values\n/: divides two values\n==: returns if two things on either side are equal\n!=: returns if two things are not equal\nExamples:\n```python\na = True\nb = 1\nc = 2\nd = b + c\ne = b / c\nprint(b == c)\nprint(b * e)\n print(d != e)\n```\noutput:\nFalse\n0.5\nTrue'
 						});
 					break;
 					//Tutorial 2
-					case '2':
+					case '3':
 						bot.sendMessage({
 							to: channelID,
 							message: 'If/Else Statements: ```python\nif case1:\n\t#whatever you want to happen\nelif case2:\n\t#whatever you want to happen if case1 is false, but case2 is true\nelse:\n\t#whatever you want to happen if case1 and case2 are both false/n```'
 						});
 					break;
-					//Tutorial 3
-					case '3':
-						bot.sendMessage({
-							to: channelID,
-							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run 5 times\n```'
-						});
-					break;
 					//Tutorial 4
 					case '4':
+						bot.sendMessage({
+							to: channelID,
+							message: 'While Loops: ```python\nwhile case1:\n\t#whatever you want to happen until case1 is false\n```\nFor Loops: ```python\nfor i in range(n):\n\t#whatever you want to run n times\n```'
+						});
+					break;
+					//Tutorial 5
+					case '5':
 						bot.sendMessage({
 							to: channelID,
 							message: 'Functions: ```python\ndef func_name(args):\n\t#whatever the function does\n```'
@@ -219,7 +264,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 					default:
 						bot.sendMessage({
 							to: channelID,
-							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\n Tutorial 2 is if/else statements \nTutorial 3 is loops \n Tutorial 4 is functions'
+							message: 'Add a number after tutorial \nTutorial 1 is print statements and variable assignment\nTutorial 2 is variable types and operators\nTutorial 3 is if/else statements \nTutorial 4 is loops \nTutorial 5 is functions'
 						});
 					break;
 				}

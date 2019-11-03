@@ -707,6 +707,3 @@ bot.on('message', function (user, userID, channelID, message, evt) {
          }
      }
 });
-
-
-//os.system(python user.py > output.txt);

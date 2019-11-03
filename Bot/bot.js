@@ -117,6 +117,26 @@ class DBUserDatabase
             });
         }
     }
+    hasUser(userID)
+    {
+    	var exists = false;
+    	for (var i = 0; i < this.players.length; i++) 
+        {
+            if (userID = this.players[i].getName())
+            	exists = true;
+        }
+        return exists;
+    }
+    getUserLevel(userID)
+    {
+    	for (var i = 0; i < this.players.length; i++) 
+        {
+            if (this.players[i].getName() == userID)
+            {
+                return this.players[i].getLevel();
+            }
+        }
+    }
 }
 
 class DBUser 

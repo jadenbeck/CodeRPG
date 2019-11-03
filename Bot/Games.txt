@@ -1,11 +1,10 @@
 Tutorial 1
-<<<<<<< HEAD
 1. Print simple ()
 2. Print concatenation ()
 3. Initialize variable and print 
     You are walking through the dense rainforest in the midst of night, lost, without
-any sense of direction. Suddenly, a monkey swings by, demanding five bananas, in return for a
-map. Set the variable bananas to 5 and
+	any sense of direction. Suddenly, a monkey swings by, demanding five bananas, in return for a
+	map. Set the variable bananas to 5 and
 
 Tutorial 2
 4. Variable types (set a variable to the boolean true, set a variable to
@@ -25,8 +24,8 @@ Tutorial 3
 
 Tutorial 4
 8. Loops 1
-    In your many travels, you nd up in space, where you have just stolen the Death Star plans. In order to escape, you must overload the Sith's computer system by printing the numbers
-	1 through 100 sequentially. But make your code brief, the Sith combatants are right on your tail!
+    In your many travels, you end up in space, where you have just stolen the Death Star plans. In order to escape, you must overload the Sith's computer system by printing the numbers
+	1 through 25 sequentially. But make your code brief, the Sith combatants are right on your tail!
 9. Loops 2
     Waking from your daydreams, you realize you are in math class and you teacher asked for the first 15 numbers from the fibbonaci sequence, and you don't have much time until
 	the class is over! You need to quickly write a loop in order to to print the first 15 numbers, remember that the fibbonaci sequence is the number before it in the sequence

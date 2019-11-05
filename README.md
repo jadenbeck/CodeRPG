@@ -1,4 +1,4 @@
-#CodeRPG
+# CodeRPG
 
 **Origin:** This was originally a project for the 2019 HackRPI hackathon, in which we successfully created this discord bot that could run a users Python inputs and compare it to predetermined output. The creation of this bot was an incredible experience, and even ended up winning a Wolfram Award at HackRPI.
 

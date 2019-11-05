@@ -200,14 +200,23 @@ class RunCode {
 		while(d2-d < ms);
 	}
 	
+	gradeQuestion(code, level) {
+		
+	}
+	
 	runPython(code, level) {
 		code = "ab83fb362bfi27fba3 = 0\n" + code.substring(9,code.length-3).trim();
 		var lines = code.split("\n");
 		for (var i = 0; i < lines.length; i++) {
+			//The following are just temporary fixes for these issues, we should find a more concrete solution in the future
 			if (lines[i].includes("for") || lines[i].includes("while")) {
 				lines.splice(i+1, 0, '    ab83fb362bfi27fba3 += 1');
 				lines.splice(i+2, 0, '    if (ab83fb362bfi27fba3 > 100):');
 				lines.splice(i+3, 0, '    \tbreak');
+			}
+			if (lines[i].includes("input(")) {
+				lines.splice(i,1);
+				i -= 1
 			}
 		}
 		code = ""

@@ -1,4 +1,5 @@
 #CodeRPG
+
 **Origin:** This was originally a project for the 2019 HackRPI hackathon, in which we successfully created this discord bot that could run a users Python inputs and compare it to predetermined output. The creation of this bot was an incredible experience, and even ended up winning a Wolfram Award at HackRPI.
 
 **What inspired us:** We are all active users of Discord, and know how large the user base is. We thought that creating a chat bot "RPG" to teach people with little-to-no coding experience Python would be fun, and that it could get people to try out programming and be more interested in computer science.
